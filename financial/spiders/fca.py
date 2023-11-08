@@ -10,8 +10,9 @@ import financial.constants as constants
 class FcaSpider(scrapy.Spider):
     name = "fca"
 
-    def __init__(self, keywords_list: list, *args, **kwargs):
+    def __init__(self, keywords_list: list, max_pages: int = 1, *args, **kwargs):
         self.keywords_list = keywords_list
+        self.max_pages = max_pages
         super().__init__()
 
     def start_requests(self):
@@ -50,8 +51,9 @@ class FcaSpider(scrapy.Spider):
                                   'name': name,
                                   'status': status
                               })
-
-        yield from self.get_next_page(kwargs.get('keyword'), kwargs.get('page') + 1)
+        next_page = kwargs.get('page') + 1
+        if next_page <= self.max_pages:
+            yield from self.get_next_page(kwargs.get('keyword'), kwargs.get('page') + 1)
 
     def parse(self, response, **kwargs):
         result = response.jmespath('actions[0].returnValue').get()

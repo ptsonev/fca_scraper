@@ -26,7 +26,7 @@ STATS_DUMP = True
 
 COOKIES_ENABLED = False
 
-HTTPPROXY_ENABLED = False
+HTTPPROXY_ENABLED = True
 HTTP_PROXY = 'http://127.0.0.1:8888'
 
 TELNETCONSOLE_ENABLED = False
@@ -43,7 +43,7 @@ DEFAULT_REQUEST_HEADERS = {
     'Sec-Fetch-Mode': 'navigate',
     'Sec-Fetch-User': '?1',
     'Sec-Fetch-Dest': 'document',
-    'Accept-Encoding': 'gzip, deflate, br',
+    'Accept-Encoding': 'gzip, deflate',
     'Accept-Language': 'en-US,en;q=0.9',
 }
 

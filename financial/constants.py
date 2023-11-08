@@ -1,3 +1,5 @@
+RESULTS_PER_PAGE = 1000
+
 PAGINATION_URL = 'https://register.fca.org.uk/s/sfsites/aura?r={page}&other.ShPo_LEX_Reg_Search.getFirmDetails=1'
 DETAILS_URL = 'https://register.fca.org.uk/s/sfsites/aura?r=0&other.ShPo_LEX_Reg_FirmDetail.initMethod=1&other.ShPo_LEX_Reg_Utility.GetGADetails=2&ui-self-service-components-profileMenu.ProfileMenu.getProfileMenuResponse=1'
 
@@ -9,7 +11,7 @@ MESSAGE = {
         "callingDescriptor": "markup://c:ShPo_LEX_Reg_SearchContainer",
         "params": {
             "searchValues": "",
-            "pageSize": "5000",
+            "pageSize": str(RESULTS_PER_PAGE),
             "pageNo": "1",
             "typeOfSearch": "Companies",
             "location": {

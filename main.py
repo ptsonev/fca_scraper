@@ -43,9 +43,10 @@ def set_table_style(worksheet: Worksheet, table_name: str, table_style: str = 'T
 
 def main():
     keywords = [
-        'equity release',
-        'debt',
-        'IVA'
+        # 'equity release',
+        # 'debt',
+        # 'IVA'
+        'mortgage',
     ]
 
     configure_logging()
@@ -56,7 +57,7 @@ def main():
         os.environ.setdefault('HTTPS_PROXY', settings.get('HTTP_PROXY'))
 
     process = CrawlerProcess(settings, install_root_handler=False)
-    process.crawl(FcaSpider, keywords_list=keywords)
+    process.crawl(FcaSpider, keywords_list=keywords, max_pages=5)
     process.start(install_signal_handlers=True)
 
     df = pd.read_csv('data.csv')
