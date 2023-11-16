@@ -44,13 +44,13 @@ def set_table_style(worksheet: Worksheet, table_name: str, table_style: str = 'T
 def main():
     keywords = {
         'https://register.fca.org.uk/s/search?q=pension&type=Companies&sortby=status': '420',
-        # 'https://register.fca.org.uk/s/search?q=health&type=Companies&sortby=status': '780',
-        # 'https://register.fca.org.uk/s/search?q=credit&type=Companies&sortby=status': '920',
-        # 'https://register.fca.org.uk/s/search?q=IFA&type=Companies&sortby=status': '440',
-        # 'https://register.fca.org.uk/s/search?q=advisor&type=Companies&sortby=status': '840',
-        # 'https://register.fca.org.uk/s/search?q=broker&type=Companies&sortby=status': '1520',
-        # 'https://register.fca.org.uk/s/search?q=will&type=Companies&sortby=status': '860',
-        # 'https://register.fca.org.uk/s/search?q=funeral&type=Companies&sortby=status': '1160',
+        'https://register.fca.org.uk/s/search?q=health&type=Companies&sortby=status': '780',
+        'https://register.fca.org.uk/s/search?q=credit&type=Companies&sortby=status': '920',
+        'https://register.fca.org.uk/s/search?q=IFA&type=Companies&sortby=status': '440',
+        'https://register.fca.org.uk/s/search?q=advisor&type=Companies&sortby=status': '840',
+        'https://register.fca.org.uk/s/search?q=broker&type=Companies&sortby=status': '1520',
+        'https://register.fca.org.uk/s/search?q=will&type=Companies&sortby=status': '860',
+        'https://register.fca.org.uk/s/search?q=funeral&type=Companies&sortby=status': '1160',
     }
 
     configure_logging()
