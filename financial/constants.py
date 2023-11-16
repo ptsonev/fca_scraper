@@ -1,4 +1,4 @@
-RESULTS_PER_PAGE = 1000
+RESULTS_PER_PAGE = 20
 
 PAGINATION_URL = 'https://register.fca.org.uk/s/sfsites/aura?r={page}&other.ShPo_LEX_Reg_Search.getFirmDetails=1'
 DETAILS_URL = 'https://register.fca.org.uk/s/sfsites/aura?r=0&other.ShPo_LEX_Reg_FirmDetail.initMethod=1&other.ShPo_LEX_Reg_Utility.GetGADetails=2&ui-self-service-components-profileMenu.ProfileMenu.getProfileMenuResponse=1'
@@ -31,7 +31,7 @@ MESSAGE = {
 
 CONTEXT = {
     "mode": "PROD",
-    "fwuid": "MDM0c01pMVUtd244bVVLc2VRYzQ2UWRkdk8xRWxIam5GeGw0LU1mRHRYQ3cyNDYuMTUuNC0zLjAuNA",
+    "fwuid": "MDM0c01pMVUtd244bVVLc2VRYzQ2UWRkdk8xRWxIam5GeGw0LU1mRHRYQ3cyNDYuMTUuNS0zLjAuNA",
     "app": "siteforce:communityApp",
     "loaded": {
         "APPLICATION@markup://siteforce:communityApp": "_0uyRlc-Hz-jy1e6OwrFdg",

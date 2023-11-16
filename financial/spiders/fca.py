@@ -1,4 +1,6 @@
 import json
+import math
+from urllib.parse import urlparse, parse_qs
 
 import scrapy
 from scrapy import FormRequest
@@ -10,16 +12,20 @@ import financial.constants as constants
 class FcaSpider(scrapy.Spider):
     name = "fca"
 
-    def __init__(self, keywords_list: list, max_pages: int = 1, *args, **kwargs):
+    def __init__(self, keywords_list: dict[str, int], *args, **kwargs):
         self.keywords_list = keywords_list
-        self.max_pages = max_pages
         super().__init__()
 
     def start_requests(self):
 
-        for keyword in self.keywords_list:
+        for url, max_results in self.keywords_list.items():
+            parsed_url = urlparse(url)
+            query_params = parse_qs(parsed_url.query)
+            keyword = query_params.get('q')[0]
+            max_pages = math.ceil(int(max_results) / constants.RESULTS_PER_PAGE) + 1
+
             search_params = [k.strip() for k in keyword.split(' ') if k.strip()]
-            yield from self.get_next_page(search_params, 1)
+            yield from self.get_next_page(search_params, 1, max_pages)
 
     def parse_pagination(self, response: Response, **kwargs):
         results = response.jmespath('actions[0].returnValue.accDetails').getall()
@@ -51,9 +57,10 @@ class FcaSpider(scrapy.Spider):
                                   'name': name,
                                   'status': status
                               })
+        max_pages = kwargs.get('max_pages')
         next_page = kwargs.get('page') + 1
-        if next_page <= self.max_pages:
-            yield from self.get_next_page(kwargs.get('keyword'), kwargs.get('page') + 1)
+        if next_page <= max_pages:
+            yield from self.get_next_page(kwargs.get('keyword'), next_page, max_pages)
 
     def parse(self, response, **kwargs):
         result = response.jmespath('actions[0].returnValue').get()
@@ -74,7 +81,7 @@ class FcaSpider(scrapy.Spider):
             'complaint_address': complaint_address,
             'complaint_postcode': complaint_postcode,
             'complaint_phone': complaint_phone or principal_phone,
-            'complaint_email': complaint_email,
+            'complaint_email': complaint_email or principal_email,
             'complaint_website': complaint_website,
 
             'principal_address': principal_address,
@@ -107,7 +114,7 @@ class FcaSpider(scrapy.Spider):
             'aura.token': ''
         }
 
-    def get_next_page(self, keyword: list, page: int):
+    def get_next_page(self, keyword: list, page: int, max_pages: int = 1):
         message = constants.MESSAGE.copy()
 
         message['actions'][0]['params']['pageNo'] = str(page)
@@ -118,5 +125,6 @@ class FcaSpider(scrapy.Spider):
                           callback=self.parse_pagination,
                           cb_kwargs={
                               'keyword': keyword,
-                              'page': page
+                              'page': page,
+                              'max_pages': max_pages
                           })
