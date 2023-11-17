@@ -22,7 +22,7 @@ class FcaSpider(scrapy.Spider):
             parsed_url = urlparse(url)
             query_params = parse_qs(parsed_url.query)
             keyword = query_params.get('q')[0]
-            max_pages = math.ceil(int(max_results) / constants.RESULTS_PER_PAGE) + 1
+            max_pages = math.ceil(int(max_results) / constants.RESULTS_PER_PAGE) + 5
 
             search_params = [k.strip() for k in keyword.split(' ') if k.strip()]
             yield from self.get_next_page(search_params, 1, max_pages)
@@ -55,7 +55,8 @@ class FcaSpider(scrapy.Spider):
                               cb_kwargs={
                                   'id': company_id,
                                   'name': name,
-                                  'status': status
+                                  'status': status,
+                                  'keyword': kwargs.get('keyword'),
                               })
         max_pages = kwargs.get('max_pages')
         next_page = kwargs.get('page') + 1
@@ -90,7 +91,8 @@ class FcaSpider(scrapy.Spider):
             'principal_email': principal_email,
             'principal_website': principal_website,
 
-            'status': kwargs.get('status')
+            'status': kwargs.get('status'),
+            'keyword': kwargs.get('keyword'),
         }
 
     def parse_address(self, address: dict[str, str]):

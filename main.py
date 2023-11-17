@@ -66,10 +66,9 @@ def main():
 
     df = pd.read_csv('data.csv')
 
-    OUTPUT_EXCEL_FILE = 'data.xlsx'
-    df.to_excel(OUTPUT_EXCEL_FILE, index=False)
-    prettify_excel_file(OUTPUT_EXCEL_FILE)
-
+    for keyword in df['keyword'].unique():
+        filtered_records = df[df['keyword'] == keyword]
+        filtered_records.to_csv(f'{keyword}.csv', index=False)
 
 if __name__ == '__main__':
     main()
